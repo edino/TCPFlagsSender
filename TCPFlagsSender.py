@@ -32,7 +32,7 @@ def get_tcp_flags():
     selected_flags = selected_flags.split(',')
     
     # Map user input to corresponding TCP flags
-    flags_mapping = {'1': 'URG', '2': 'ACK', '3': 'PSH', '4': 'RST', '5': 'SYN', '6': 'FIN'}
+    flags_mapping = {'1': 'U', '2': 'A', '3': 'P', '4': 'R', '5': 'S', '6': 'F'}
     tcp_flags = [flags_mapping.get(flag.strip()) for flag in selected_flags if flag.strip() in flags_mapping]
     
     return ','.join(tcp_flags)
