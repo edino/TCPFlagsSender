@@ -6,12 +6,13 @@
 
 # BuildDate: 5:53 PM EST 2024-01-13
 
-# A simple way to execute this script is using the following command: curl -s https://raw.githubusercontent.com/edino/TCPFlagsSender/main/TCPFlagsSender.py | python3 -
+# A simple way to execute this script is using the following command: curl -s https://raw.githubusercontent.com/edino/TCPFlagsSender/main/tcp_flags_sender.py | python3 -
 
 from scapy.all import IP, TCP, send
 
 # Function to get user input for TCP flags
 def get_tcp_flags():
+    print("")
     print("TCP Flags Menu:")
     print("")
     print("1. URG - (Urgent): TCP Urgent Flag signals meaningful Urgent Pointer, prompting the receiver to accept urgent data; its absence implies no outstanding urgency.")
@@ -28,7 +29,7 @@ def get_tcp_flags():
     print("")
 
     # Get user input for TCP flags
-    selected_flags = input("Enter the numbers of TCP flags (comma-separated): ")
+    selected_flags = input("\nEnter the numbers of TCP flags (comma-separated): ")
     selected_flags = selected_flags.split(',')
 
     # Map user input to corresponding TCP flags
@@ -44,15 +45,15 @@ src_ip, dst_ip, src_port, dst_port = None, None, None, None
 while True:
     # Get user input for source and destination IP addresses if not already stored
     if src_ip is None:
-        src_ip = input("Enter source IP address: ")
+        src_ip = input("\nEnter source IP address: ")
     if dst_ip is None:
-        dst_ip = input("Enter destination IP address: ")
+        dst_ip = input("\nEnter destination IP address: ")
 
     # Get user input for source and destination ports if not already stored
     if src_port is None:
-        src_port = int(input("Enter source port: "))
+        src_port = int(input("\nEnter source port: "))
     if dst_port is None:
-        dst_port = int(input("Enter destination port: "))
+        dst_port = int(input("\nEnter destination port: "))
 
     # Get user input for TCP flags
     tcp_flags = get_tcp_flags()
@@ -67,13 +68,13 @@ while True:
     packet = ip_packet / tcp_packet
 
     # Get user input for the number of packets to send
-    num_packets = int(input("Enter the number of packets to send: "))
+    num_packets = int(input("\nEnter the number of packets to send: "))
 
     # Send packets in a loop
     for _ in range(num_packets):
         send(packet)
 
     # Ask the user if they want to run the script again with the same inputs
-    run_again = input("Do you want to run the script again with the same inputs? (yes/no): ").lower()
+    run_again = input("\nDo you want to run the script again with the same inputs? (yes/no): ").lower()
     if run_again != 'yes':
         break
