@@ -4,9 +4,9 @@
 # License: GPL-3.0 license - https://github.com/edino/TCPFlagsSender/tree/main?tab=GPL-3.0-1-ov-file
 # Description: This script allows users to customize and send TCP packets with specific flags, IP addresses, ports, and quantities.
 
-# BuildDate: 5:10 PM EST 2024-01-13
+# BuildDate: 5:53 PM EST 2024-01-13
 
-# A simple way to execute this script is using the following command: curl -s https://raw.githubusercontent.com/edino/TCPFlagsSender/main/TCPFlagsSender.py | python -
+# A simple way to execute this script is using the following command: curl -s https://raw.githubusercontent.com/edino/TCPFlagsSender/main/TCPFlagsSender.py | python3 -
 
 from scapy.all import IP, TCP, send
 
@@ -26,40 +26,54 @@ def get_tcp_flags():
     print("")
     print("6. FIN - (Finish): Request to end the session. The connection is closed when both devices accept this.")
     print("")
-    
+
     # Get user input for TCP flags
     selected_flags = input("Enter the numbers of TCP flags (comma-separated): ")
     selected_flags = selected_flags.split(',')
-    
+
     # Map user input to corresponding TCP flags
     flags_mapping = {'1': 'U', '2': 'A', '3': 'P', '4': 'R', '5': 'S', '6': 'F'}
     tcp_flags = [flags_mapping.get(flag.strip()) for flag in selected_flags if flag.strip() in flags_mapping]
+
+    return ''.join(tcp_flags)
     
-    return ','.join(tcp_flags)
+# Initialize variables
+src_ip, dst_ip, src_port, dst_port = None, None, None, None
 
-# Get user input for source and destination IP addresses
-src_ip = input("Enter source IP address: ")
-dst_ip = input("Enter destination IP address: ")
+# Run the script in a loop based on user input
+while True:
+    # Get user input for source and destination IP addresses if not already stored
+    if src_ip is None:
+        src_ip = input("Enter source IP address: ")
+    if dst_ip is None:
+        dst_ip = input("Enter destination IP address: ")
 
-# Get user input for source and destination ports
-src_port = int(input("Enter source port: "))
-dst_port = int(input("Enter destination port: "))
+    # Get user input for source and destination ports if not already stored
+    if src_port is None:
+        src_port = int(input("Enter source port: "))
+    if dst_port is None:
+        dst_port = int(input("Enter destination port: "))
 
-# Get user input for TCP flags
-tcp_flags = get_tcp_flags()
+    # Get user input for TCP flags
+    tcp_flags = get_tcp_flags()
 
-# Create an IP packet
-ip_packet = IP(src=src_ip, dst=dst_ip)
+    # Create an IP packet
+    ip_packet = IP(src=src_ip, dst=dst_ip)
 
-# Create a TCP packet with the specified flags
-tcp_packet = TCP(sport=src_port, dport=dst_port, flags=tcp_flags)
+    # Create a TCP packet with the specified flags
+    tcp_packet = TCP(sport=src_port, dport=dst_port, flags=tcp_flags)
 
-# Combine the IP and TCP packets
-packet = ip_packet / tcp_packet
+    # Combine the IP and TCP packets
+    packet = ip_packet / tcp_packet
 
-# Get user input for the number of packets to send
-num_packets = int(input("Enter the number of packets to send: "))
+    # Get user input for the number of packets to send
+    num_packets = int(input("Enter the number of packets to send: "))
 
-# Send packets in a loop
-for _ in range(num_packets):
-    send(packet)
+    # Send packets in a loop
+    for _ in range(num_packets):
+        send(packet)
+
+    # Ask the user if they want to run the script again with the same inputs
+    run_again = input("Do you want to run the script again with the same inputs? (yes/no): ").lower()
+    if run_again != 'yes':
+        break
