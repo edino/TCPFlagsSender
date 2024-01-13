@@ -1,9 +1,12 @@
-#Copyright
-#Original author: Edino De Souza
-#Repository: https://github.com/edino/TCPFlagsSender
-#License: GPL-3.0 license - https://github.com/edino/TCPFlagsSender/tree/main?tab=GPL-3.0-1-ov-file
-#Description: This script allows users to customize and send TCP packets with specific flags, IP addresses, ports, and quantities.
-#BuildDate: 4:55 PM 2024-01-13
+# Copyright
+# Original author: Edino De Souza
+# Repository: https://github.com/edino/TCPFlagsSender
+# License: GPL-3.0 license - https://github.com/edino/TCPFlagsSender/tree/main?tab=GPL-3.0-1-ov-file
+# Description: This script allows users to customize and send TCP packets with specific flags, IP addresses, ports, and quantities.
+
+# BuildDate: 5:10 PM EST 2024-01-13
+
+# A simple way to execute this script is using the following command: curl -s https://raw.githubusercontent.com/edino/TCPFlagsSender/main/TCPFlagsSender.py | python -
 
 from scapy.all import IP, TCP, send
 
@@ -11,7 +14,7 @@ from scapy.all import IP, TCP, send
 def get_tcp_flags():
     print("TCP Flags Menu:")
     print("")
-    print("1. URG - The TCP Urgent Flag is used to indicate that the Urgent Pointer field is meaningful, allowing the sender to stimulate the receiver to accept urgent data, with the absence of the flag indicating no outstanding urgent data.")
+    print("1. URG - (Urgent): TCP Urgent Flag signals meaningful Urgent Pointer, prompting the receiver to accept urgent data; its absence implies no outstanding urgency.")
     print("")
     print("2. ACK - (Acknowledgment): Confirms the connection agreement has been accepted and that the connection is now established. At this point data transfer can begin.")
     print("")
